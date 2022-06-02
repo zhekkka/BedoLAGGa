@@ -75,7 +75,7 @@ int main() {
                 if (in.is_open()){
                     List->clear();
                     in>>(*List);
-                    if (!(in.fail())) {
+                    if ((!(in.fail()))) {
                         if ((List->getNumber() != 0)) {
                             UnitListFlag = true;
                         } else {
@@ -85,6 +85,7 @@ int main() {
                     } else{
                         UnitListFlag=false;
                         List->clear();
+                        std::cout << "Неверный формат данных в файле!" << std::endl;
                         std::cout<<"Список принудительно очищен"<<std::endl;
                     }
                     in.close();

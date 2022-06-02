@@ -182,12 +182,12 @@ bool operator==(Unit &a, Unit &b) {
 
 std::ostream &operator<<(std::ostream &out, const Unit &unit) {
     out << unit.name << "*";
-    out << unit.x << "*";
-    out << unit.y << "*";
+    out << std::to_string(unit.x) << "*";
+    out << std::to_string(unit.y) << "*";
     out << unit.prod << "*";
-    out << unit.prodNum << "*";
+    out << std::to_string(unit.prodNum) << "*";
     for (int i = 0; i < 4; ++i) {
-        out << unit.prodReq[i] << "*";
+        out << std::to_string(unit.prodReq[i]) << "*";
     }
     out << std::endl;
     return out;
@@ -195,10 +195,20 @@ std::ostream &operator<<(std::ostream &out, const Unit &unit) {
 
 std::istream &operator>>(std::istream &in, Unit &unit) {
     std::string str;
+    //setlocale(LC_ALL, "English");
     bool Fl = true;
     getline(in, str);
     int y, count;
     count = 0;
+    for (int i = 0; i < str.length(); ++i) {
+        if (str[i]=='*'){
+            count++;
+        }
+    }
+    if (count!=9){
+        Fl=false;
+    }
+    count=0;
     for (int i = 0; i < 9; ++i) {
         y = str.find("*");
         if ((y == -1) | (std::string(str, 0, y).empty())) {
@@ -313,8 +323,9 @@ std::istream &operator>>(std::istream &in, Unit &unit) {
         }
     }
     if (!Fl) {
-        std::cout << "Неверный формат данных в файле!" << std::endl;
         in.setstate(std::ios_base::failbit);
+    }else{
+        in.setstate(std::ios_base::goodbit);
     }
     return in;
 }
@@ -407,6 +418,8 @@ std::istream &operator>>(std::istream &in, UnitList &unitList) {
         if (inLine.fail()) {
             in.setstate(std::ios_base::failbit);
             break;
+        } else{
+            in.setstate(std::ios_base::goodbit);
         }
     }
 
@@ -626,10 +639,12 @@ void UnitList::clear() {
     UnitList::UnitNode *tmpNode = this->first;
     UnitList::UnitNode *tmpNodeNext = nullptr;
     for (int i = 0; i < UnitListNumber; ++i) {
-        if (!(*tmpNode).unit.getName().empty()) {
-            tmpNodeNext = (*tmpNode).next;
-            this->removeNode(tmpNode);
-            s++;
+        if (tmpNode!= nullptr) {
+            if (!(*tmpNode).unit.getName().empty()) {
+                tmpNodeNext = (*tmpNode).next;
+                this->removeNode(tmpNode);
+                s++;
+            }
         }
         tmpNode = tmpNodeNext;
     }

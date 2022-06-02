@@ -6,21 +6,27 @@
 
 #IncludeRegexTransform: 
 
+C:/Users/zhest/CLionProjects/strategy/header.cpp
+header.h
+C:/Users/zhest/CLionProjects/strategy/header.h
+iostream
+-
+string
+-
+cmath
+C:/Users/zhest/CLionProjects/strategy/cmath
+sstream
+-
+fstream
+-
+cctype
+C:/Users/zhest/CLionProjects/strategy/cctype
+climits
+-
+
 C:/Users/zhest/CLionProjects/strategy/header.h
 string
 -
 iostream
 C:/Users/zhest/CLionProjects/strategy/iostream
-
-C:/Users/zhest/CLionProjects/strategy/main.cpp
-iostream
--
-header.h
-C:/Users/zhest/CLionProjects/strategy/header.h
-string
--
-fstream
--
-map
--
 
