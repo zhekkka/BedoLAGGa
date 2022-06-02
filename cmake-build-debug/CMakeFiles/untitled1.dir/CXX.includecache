@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/zhest/CLionProjects/strategy/header.h
+string
+-
+iostream
+C:/Users/zhest/CLionProjects/strategy/iostream
+
+C:/Users/zhest/CLionProjects/strategy/main.cpp
+iostream
+-
+header.h
+C:/Users/zhest/CLionProjects/strategy/header.h
+string
+-
+fstream
+-
+map
+-
+
