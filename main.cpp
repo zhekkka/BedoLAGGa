@@ -46,22 +46,28 @@ int main() {
         choice(x, xArg,choiceInt);
         switch (choiceInt) {
             case 0: {//help
-                std::cout
-                        << "clear- очистить список| load <filename> - добавить список из файла| save <filename> - сохранить список в файле"<< std::endl << "add  <filename> или console- добавить элемент| sort- отсортировать"<<std::endl<< "find- вывести на экран элементы, удовлетровяющие условиям| delete- удалить элементы, удовлетворяющие условиям"<<std::endl<< "resources- вывести на экран, сколько ресурсов нужно для сожания имеющихся юнитов и сколько они производят| exit- выход"
-                        << std::endl;
-                connect(x,xArg);
+                if (xArg=="") {
+                    std::cout
+                            << "clear- очистить список| load <filename> - добавить список из файла| save <filename> - сохранить список в файле"
+                            << std::endl << "add  <filename> или console- добавить элемент| sort- отсортировать"
+                            << std::endl
+                            << "find- вывести на экран элементы, удовлетровяющие условиям| delete- удалить элементы, удовлетворяющие условиям"
+                            << std::endl
+                            << "resources- вывести на экран, сколько ресурсов нужно для сожания имеющихся юнитов и сколько они производят| exit- выход"
+                            << std::endl;
+                }
                 break;
             }
             case 1: {//clear
-                if (UnitListFlag){
-                    List->clear();
-                    UnitListFlag=false;
-                    std::cout<<"Список очищен!"<<std::endl;
+                if (xArg=="") {
+                    if (UnitListFlag) {
+                        List->clear();
+                        UnitListFlag = false;
+                        std::cout << "Список очищен!" << std::endl;
+                    } else {
+                        std::cout << "Список пуст!" << std::endl;
+                    }
                 }
-                else{
-                    std::cout<<"Список пуст!"<<std::endl;
-                }
-                connect(x ,xArg);
                 break;
             }
             case 2: {//load добавить в список
@@ -85,7 +91,6 @@ int main() {
                 } else{
                     std::cout<<"Неправильный путь!"<<std::endl;
                 }
-                connect(x, xArg);
                 break;
             }
             case 3: {//save сохранить список
@@ -103,7 +108,6 @@ int main() {
                 } else{
                     std::cout<<"Список пуст!"<<std::endl;
                 }
-                connect(x, xArg);
                 break;
             }
             case 4: {//add
@@ -123,62 +127,65 @@ int main() {
                 if (!Fl){
                     std::cout<<"Неправильный ввод!"<<std::endl;
                 }
-                connect(x, xArg);
                 break;
             }
             case 5: {//sort доделать
-                if (UnitListFlag){
-                    List->sort();
-                    std::cout<<"Список отсортирован!"<<std::endl;
+                if (xArg=="") {
+                    if (UnitListFlag) {
+                        List->sort();
+                        std::cout << "Список отсортирован!" << std::endl;
+                    } else {
+                        std::cout << "Список пуст!" << std::endl;
+                    }
                 }
-                else{
-                    std::cout<<"Список пуст!"<<std::endl;
-                }
-                connect(x, xArg);
                 break;
             }
             case 6: {//find
-                if (UnitListFlag){
-                    List->write();
+                if (xArg=="") {
+                    if (UnitListFlag) {
+                        List->write();
+                    } else {
+                        std::cout << "Список пуст!" << std::endl;
+                    }
                 }
-                else{
-                    std::cout<<"Список пуст!"<<std::endl;
-                }
-                connect(x, xArg);
                 break;
             }
             case 7: {//delete
-                if (UnitListFlag){
-                    List->remove();
-                    if(List->getNumber()==0){
-                        UnitListFlag= false;
+                if (xArg=="") {
+                    if (UnitListFlag) {
+                        List->remove();
+                        if (List->getNumber() == 0) {
+                            UnitListFlag = false;
+                        }
+                    } else {
+                        std::cout << "Список пуст!" << std::endl;
                     }
                 }
-                else{
-                    std::cout<<"Список пуст!"<<std::endl;
-                }
-                connect(x,xArg);
                 break;
             }
             case 8: {//resources
-                if (UnitListFlag){
-                    List->resources();
+                if (xArg=="") {
+                    if (UnitListFlag) {
+                        List->resources();
+                    } else {
+                        std::cout << "Список пуст!" << std::endl;
+                    }
                 }
-                else{
-                    std::cout<<"Список пуст!"<<std::endl;
-                }
-                connect(x,xArg);
                 break;
             }
             case 9: {//exit
-                Flag = false;
+                if (xArg=="") {
+                    Flag = false;
+                    break;
+                }
                 break;
             }
             case 10:{//writeAll
-                if (UnitListFlag){
-                    std::cout<<*List;
+                if (xArg=="") {
+                    if (UnitListFlag) {
+                        std::cout << *List;
+                    }
                 }
-                connect(x,xArg);
                 break;
             }
         }
