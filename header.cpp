@@ -223,8 +223,8 @@ std::istream &operator>>(std::istream &in, Unit &unit) {
                 }
                 case 1: {
                     for (int j = 0; j < std::string(str, 0, y).length(); ++j) {
-                        if (isdigit(str[j]) or (str[j] == ',')) {
-                            if (str[j] == ',') {
+                        if (isdigit(str[j]) or (str[j] == ',')or (str[j]=='-')) {
+                            if ((str[j] == ',') or (str[j]=='-')) {
                                 count++;
                             }
                         } else {
@@ -232,7 +232,7 @@ std::istream &operator>>(std::istream &in, Unit &unit) {
                             break;
                         }
                     }
-                    if (Fl and ((count == 1) or (count == 0))) {
+                    if (Fl and ((count == 2) or (count == 0)or (count==1))) {
                         unit.x = std::stod(std::string(str, 0, y));
                         str = std::string(str, y + 1, str.length() - 1 - y);
                         count = 0;
@@ -244,8 +244,8 @@ std::istream &operator>>(std::istream &in, Unit &unit) {
                 }
                 case 2: {
                     for (int j = 0; j < std::string(str, 0, y).length(); ++j) {
-                        if (isdigit(str[j]) or (str[j] == ',')) {
-                            if (str[j] == ',') {
+                        if (isdigit(str[j]) or (str[j] == ',')or (str[j]=='-')) {
+                            if ((str[j] == ',')or (str[j]=='-')) {
                                 count++;
                             }
                         } else {
@@ -253,7 +253,7 @@ std::istream &operator>>(std::istream &in, Unit &unit) {
                             break;
                         }
                     }
-                    if (Fl and ((count == 1) or (count == 0))) {
+                    if (Fl and ((count == 2) or (count == 0)or (count==1))) {
                         unit.y = std::stod(std::string(str, 0, y));
                         str = std::string(str, y + 1, str.length() - 1 - y);
                         count = 0;
@@ -276,8 +276,8 @@ std::istream &operator>>(std::istream &in, Unit &unit) {
                 }
                 case 4: {
                     for (int j = 0; j < std::string(str, 0, y).length(); ++j) {
-                        if (isdigit(str[j]) or (str[j] == ',')) {
-                            if (str[j] == ',') {
+                        if (isdigit(str[j]) or (str[j] == ',')or (str[j]=='-')) {
+                            if ((str[j] == ',')or (str[j]=='-')) {
                                 count++;
                             }
                         } else {
@@ -285,7 +285,7 @@ std::istream &operator>>(std::istream &in, Unit &unit) {
                             break;
                         }
                     }
-                    if (Fl and ((count == 1) or (count == 0))) {
+                    if (Fl and ((count == 2) or (count == 0)or (count==1))) {
                         unit.prodNum = std::stod(std::string(str, 0, y));
                         str = std::string(str, y + 1, str.length() - 1 - y);
                         count = 0;
@@ -297,8 +297,8 @@ std::istream &operator>>(std::istream &in, Unit &unit) {
                 }
                 default: {
                     for (int j = 0; j < std::string(str, 0, y).length(); ++j) {
-                        if (isdigit(str[j]) or (str[j] == ',')) {
-                            if (str[j] == ',') {
+                        if (isdigit(str[j]) or (str[j] == ',')or (str[j]=='-')) {
+                            if ((str[j] == ',')or (str[j]=='-')) {
                                 count++;
                             }
                         } else {
@@ -306,7 +306,7 @@ std::istream &operator>>(std::istream &in, Unit &unit) {
                             break;
                         }
                     }
-                    if (Fl and ((count == 1) or (count == 0))) {
+                    if (Fl and ((count == 2) or (count == 0)or (count==1))) {
                         unit.prodReq[i - 5] = std::stod(std::string(str, 0, y));
                         str = std::string(str, y + 1, str.length() - 1 - y);
                         count = 0;
@@ -500,15 +500,13 @@ void UnitList::write() {
 };
 
 UnitList::UnitNode *UnitList::merge(UnitNode *First, UnitNode *Second) {
-    // If first linked list is empty
+
     if (!First)
         return Second;
 
-    // If second linked list is empty
     if (!Second)
         return First;
 
-    // Pick the smaller value
     if (First->unit < Second->unit) {
         First->next = merge(First->next, Second);
         First->next->prev = First;
@@ -522,17 +520,14 @@ UnitList::UnitNode *UnitList::merge(UnitNode *First, UnitNode *Second) {
     }
 }
 
-// Function to do merge sort
 UnitList::UnitNode *UnitList::mergeSort(UnitNode *head) {
     if (!head || !head->next)
         return head;
     UnitNode *Second = split(head);
 
-    // Recur for left and right halves
     head = mergeSort(head);
     Second = mergeSort(Second);
 
-    // Merge the two sorted halves
     return merge(head, Second);
 }
 
@@ -622,11 +617,13 @@ void UnitList::remove() {
     UnitList::UnitNode *tmpNodeNext = nullptr;
     int s = 0;
     for (int i = 0; i < UnitListNumber; ++i) {
-        if (!(*tmpNode).unit.getName().empty()) {
-            if (((*tmpNode).unit).check(r, x0, y0, name)) {
+        if (tmpNode!= nullptr) {
+            if (!(*tmpNode).unit.getName().empty()) {
+                if (((*tmpNode).unit).check(r, x0, y0, name)) {
+                    this->removeNode(tmpNode);
+                    s++;
+                }
                 tmpNodeNext = (*tmpNode).next;
-                this->removeNode(tmpNode);
-                s++;
             }
         }
         tmpNode = tmpNodeNext;
